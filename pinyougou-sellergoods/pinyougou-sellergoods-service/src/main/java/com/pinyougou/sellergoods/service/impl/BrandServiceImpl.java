@@ -11,7 +11,11 @@ import com.pinyougou.sellergoods.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
+/**
+ * @author mawenlong
+ * @date 2018/8/10
+ * describe: 商标服务实现
+ */
 @Service
 public class BrandServiceImpl implements BrandService {
 
@@ -23,14 +27,6 @@ public class BrandServiceImpl implements BrandService {
 
         return brandMapper.selectByExample(null);
     }
-
-//    @Override
-//    public PageResult findPage(int pageNum, int pageSize) {
-//        PageHelper.startPage(pageNum, pageSize);
-//        Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(null);
-//
-//        return new PageResult(page.getResult(), page.getTotal());
-//    }
 
     @Override
     public void add(TbBrand brand) {

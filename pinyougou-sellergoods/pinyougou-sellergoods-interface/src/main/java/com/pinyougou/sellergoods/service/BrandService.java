@@ -1,20 +1,57 @@
 package com.pinyougou.sellergoods.service;
 
-import java.util.List;
-
 import com.common.pojo.PageResult;
 import com.pinyougou.pojo.TbBrand;
 
+import java.util.List;
+
 /**
- * 品牌接口
+ * @author mawenlong
+ * @date 2018/8/10
+ * describe: 品牌接口
  */
 public interface BrandService {
-
+    /**
+     * 返回全部列表
+     *
+     * @param 
+     * @return java.util.List<com.pinyougou.pojo.TbBrand>
+     */
     List<TbBrand> findAll();
-//    PageResult findPage(int pageNum, int pageSize);
+    /**
+     * 添加
+     *
+     * @param brand
+     * @return void
+     */
     void add(TbBrand brand);
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return com.pinyougou.pojo.TbBrand
+     */
     TbBrand getById(long id);
+    /**
+     * 修改
+     * @param brand
+     * @return void
+     */
     void update(TbBrand brand);
+    /**
+     * 删除多个
+     *
+     * @param ids
+     * @return void
+     */
     void delete(Long[] ids);
+    /**
+     * 根据条件查询并且进行分页
+     *
+     * @param brand
+	 * @param pageNum
+	 * @param pageSize
+     * @return com.common.pojo.PageResult
+     */
     PageResult findPage(TbBrand brand,int pageNum, int pageSize);
 }
