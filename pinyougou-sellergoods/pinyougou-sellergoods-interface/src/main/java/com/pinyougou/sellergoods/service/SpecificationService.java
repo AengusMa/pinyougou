@@ -5,6 +5,7 @@ import com.pinyougou.pojo.TbSpecification;
 import com.pinyougou.pojogroup.Specification;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mawenlong
@@ -56,4 +57,11 @@ public interface SpecificationService {
      * @return com.common.pojo.PageResult
      */
     PageResult getPage(TbSpecification specification, int pageNum, int size);
+    /**
+     * 返回下拉列表数据
+     *
+     * @param
+     * @return java.util.List<Map>
+     */
+    List<Map> selectOptionList();
 }

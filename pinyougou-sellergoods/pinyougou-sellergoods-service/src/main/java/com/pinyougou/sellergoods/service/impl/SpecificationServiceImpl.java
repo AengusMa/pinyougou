@@ -15,6 +15,7 @@ import com.pinyougou.sellergoods.service.SpecificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mawenlong
@@ -110,5 +111,10 @@ public class SpecificationServiceImpl implements SpecificationService {
         }
         Page<TbSpecification> page = (Page<TbSpecification>) specificationMapper.selectByExample(example);
         return new PageResult(page.getResult(), page.getTotal());
+    }
+
+    @Override
+    public List<Map> selectOptionList() {
+        return specificationMapper.selectOptionList();
     }
 }

@@ -4,6 +4,7 @@ import com.common.pojo.PageResult;
 import com.pinyougou.pojo.TbBrand;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mawenlong
@@ -54,4 +55,11 @@ public interface BrandService {
      * @return com.common.pojo.PageResult
      */
     PageResult findPage(TbBrand brand,int pageNum, int pageSize);
+    /**
+     * 返回下拉列表数据
+     *      
+     * @param
+     * @return java.util.List<Map>
+     */
+    List<Map> selectOptionList();
 }
