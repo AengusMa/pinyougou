@@ -55,4 +55,12 @@ public interface SellerService {
      * @return com.common.pojo.PageResult
      */
     PageResult getPage(TbSeller seller, int pageNum, int size);
+    /**
+     * 更新状态
+     *
+     * @param sellerId
+	 * @param status
+     * @return void
+     */
+    void updateStatus(String sellerId,String status);
 }

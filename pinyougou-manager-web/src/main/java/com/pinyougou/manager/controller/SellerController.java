@@ -1,11 +1,10 @@
-package com.pinyougou.shop.controller;
+package com.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.common.pojo.PageResult;
 import com.common.pojo.Result;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.sellergoods.service.SellerService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,21 +21,19 @@ import java.util.List;
 public class SellerController {
     @Reference
     private SellerService sellerService;
+
     @RequestMapping("/findAll")
-    public List<TbSeller> findAll(){
+    public List<TbSeller> findAll() {
         return sellerService.getAll();
     }
 
     @RequestMapping("/findPage")
-    public PageResult findPage(int page, int rows){
-        return sellerService.getPage(null,page, rows);
+    public PageResult findPage(int page, int rows) {
+        return sellerService.getPage(null, page, rows);
     }
+
     @RequestMapping("/add")
-    public Result add(@RequestBody TbSeller seller){
-        //密码加密
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode(seller.getPassword());
-        seller.setPassword(password);
+    public Result add(@RequestBody TbSeller seller) {
         try {
             sellerService.add(seller);
             return new Result(true, "增加成功");
@@ -45,8 +42,9 @@ public class SellerController {
             return new Result(false, "增加失败");
         }
     }
+
     @RequestMapping("/update")
-    public Result update(@RequestBody TbSeller seller){
+    public Result update(@RequestBody TbSeller seller) {
         try {
             sellerService.update(seller);
             return new Result(true, "修改成功");
@@ -55,12 +53,14 @@ public class SellerController {
             return new Result(false, "修改失败");
         }
     }
+
     @RequestMapping("/findOne")
-    public TbSeller findOne(String id){
+    public TbSeller findOne(String id) {
         return sellerService.getById(id);
     }
+
     @RequestMapping("/delete")
-    public Result delete(String [] ids){
+    public Result delete(String[] ids) {
         try {
             sellerService.delete(ids);
             return new Result(true, "删除成功");
@@ -69,10 +69,21 @@ public class SellerController {
             return new Result(false, "删除失败");
         }
     }
+
     @RequestMapping("/search")
-    public PageResult search(@RequestBody TbSeller seller, int page, int rows  ){
+    public PageResult search(@RequestBody TbSeller seller, int page, int rows) {
         return sellerService.getPage(seller, page, rows);
     }
 
+    @RequestMapping("/updateStatus")
+    public Result updateStatus(String sellerId, String status) {
+        try {
+            sellerService.updateStatus(sellerId, status);
+            return new Result(true, "成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "失败");
+        }
+    }
 
 }
