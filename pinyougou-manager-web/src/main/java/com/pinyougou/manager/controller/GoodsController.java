@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.common.pojo.PageResult;
 import com.common.pojo.Result;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,18 +32,18 @@ public class GoodsController {
     public PageResult findPage(int page, int rows){
         return goodsService.getPage(null,page, rows);
     }
-    @RequestMapping("/add")
-    public Result add(@RequestBody TbGoods goods){
-        try {
-            goodsService.add(goods);
-            return new Result(true, "增加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "增加失败");
-        }
-    }
+    //@RequestMapping("/add")
+    //public Result add(@RequestBody TbGoods goods){
+    //    try {
+    //        goodsService.add(goods);
+    //        return new Result(true, "增加成功");
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //        return new Result(false, "增加失败");
+    //    }
+    //}
     @RequestMapping("/update")
-    public Result update(@RequestBody TbGoods goods){
+    public Result update(@RequestBody Goods goods){
         try {
             goodsService.update(goods);
             return new Result(true, "修改成功");
@@ -52,7 +53,7 @@ public class GoodsController {
         }
     }
     @RequestMapping("/findOne")
-    public TbGoods findOne(Long id){
+    public Goods findOne(Long id){
         return goodsService.getById(id);
     }
     @RequestMapping("/delete")

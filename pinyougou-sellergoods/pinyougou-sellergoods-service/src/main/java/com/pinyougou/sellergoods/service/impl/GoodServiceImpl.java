@@ -4,9 +4,11 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.common.pojo.PageResult;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsExample;
+import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,24 +24,36 @@ public class GoodServiceImpl implements GoodsService {
 
     @Autowired
     private TbGoodsMapper goodsMapper;
+    @Autowired
+    private TbGoodsDescMapper goodsDescMapper;
+
     @Override
     public List<TbGoods> getAll() {
         return goodsMapper.selectByExample(null);
     }
 
     @Override
-    public void add(TbGoods goods) {
-        goodsMapper.insert(goods);
+    public void add(Goods goods) {
+        //设置状态未审核
+        goods.getGoods().setAuditStatus("0");
+        //添加商品基本信息
+        goodsMapper.insert(goods.getGoods());
+        //添加商品扩展信息
+        goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
+        goodsDescMapper.insert(goods.getGoodsDesc());
     }
 
     @Override
-    public void update(TbGoods goods) {
-        goodsMapper.updateByPrimaryKey(goods);
+    public void update(Goods goods) {
+        //goodsMapper.updateByPrimaryKey(goods);
     }
 
     @Override
-    public TbGoods getById(Long id) {
-        return goodsMapper.selectByPrimaryKey(id);
+    public Goods getById(Long id) {
+        Goods goods = new Goods();
+        goods.setGoods(goodsMapper.selectByPrimaryKey(id));
+        goods.setGoodsDesc(goodsDescMapper.selectByPrimaryKey(id));
+        return goods;
     }
 
     @Override

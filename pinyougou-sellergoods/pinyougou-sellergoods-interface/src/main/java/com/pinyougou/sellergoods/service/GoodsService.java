@@ -2,6 +2,7 @@ package com.pinyougou.sellergoods.service;
 
 import com.common.pojo.PageResult;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojogroup.Goods;
 
 import java.util.List;
 
@@ -24,21 +25,21 @@ public interface GoodsService {
       * @param goods
       * @return void
       */
-     void add(TbGoods goods);
+     void add(Goods goods);
      /**
       * 修改
       *      
       * @param goods
       * @return void
       */
-     void update(TbGoods goods);
+     void update(Goods goods);
      /**
       * 根据主键id进行查询
       *      
       * @param id
-      * @return com.pinyougou.pojo.TbGoods
+      * @return com.pinyougou.pojo.Goods
       */
-     TbGoods getById(Long id);
+     Goods getById(Long id);
      /**
       * 删除多个商品
       *
@@ -54,5 +55,5 @@ public interface GoodsService {
 	  * @param size
       * @return com.common.pojo.PageResult
       */
-     PageResult getPage(TbGoods goods,int pageNum,int size);
+     PageResult getPage(TbGoods goods, int pageNum, int size);
 }
