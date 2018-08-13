@@ -4,6 +4,7 @@ import com.common.pojo.PageResult;
 import com.pinyougou.pojo.TbTypeTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mawenlong
@@ -55,4 +56,6 @@ public interface TypeTemplateService {
      * @return com.common.pojo.PageResult
      */
     PageResult getPage(TbTypeTemplate typeTemplate, int pageNum, int size);
+
+    List<Map> getSpecList(Long id);
 }
