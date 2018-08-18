@@ -52,6 +52,10 @@ public class GoodServiceImpl implements GoodsService {
         goodsDescMapper.insert(goods.getGoodsDesc());
 
         //启用规格
+        saveItemList(goods);
+    }
+    //插入SKU列表数据
+    private void saveItemList(Goods goods) {
         if ("1".equals(goods.getGoods().getIsEnableSpec())) {
             for (TbItem item : goods.getItemList()) {
                 String title = goods.getGoods().getGoodsName();
@@ -76,6 +80,7 @@ public class GoodServiceImpl implements GoodsService {
             itemMapper.insert(item);
         }
     }
+
     private void setItemValues(TbItem item, Goods goods) {
         //商品分类
         item.setCategoryid(goods.getGoods().getCategory3Id());
@@ -100,14 +105,34 @@ public class GoodServiceImpl implements GoodsService {
     }
     @Override
     public void update(Goods goods) {
-        //goodsMapper.updateByPrimaryKey(goods);
+        //更新基本表数据
+        goodsMapper.updateByPrimaryKey(goods.getGoods());
+        //更新扩展表数据
+        goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+
+        //删除原有的SKU列表数据
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+        itemMapper.deleteByExample(example);
+
+        saveItemList(goods);
+
     }
 
     @Override
     public Goods getById(Long id) {
         Goods goods = new Goods();
-        goods.setGoods(goodsMapper.selectByPrimaryKey(id));
-        goods.setGoodsDesc(goodsDescMapper.selectByPrimaryKey(id));
+        TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+        goods.setGoods(tbGoods);
+        TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+        goods.setGoodsDesc(tbGoodsDesc);
+        //读取SKU列表
+        TbItemExample tbItemExample = new TbItemExample();
+        TbItemExample.Criteria criteria = tbItemExample.createCriteria();
+        criteria.andGoodsIdEqualTo(id);
+        List<TbItem> items = itemMapper.selectByExample(tbItemExample);
+        goods.setItemList(items);
         return goods;
     }
 
@@ -125,7 +150,8 @@ public class GoodServiceImpl implements GoodsService {
         if (goods != null) {
             TbGoodsExample.Criteria criteria = example.createCriteria();
             if (goods.getSellerId() != null && goods.getSellerId().length() > 0) {
-                criteria.andSellerIdLike("%" + goods.getSellerId() + "%");
+                //criteria.andSellerIdLike("%" + goods.getSellerId() + "%");
+                criteria.andSellerIdEqualTo(goods.getSellerId());
             }
             if (goods.getGoodsName() != null && goods.getGoodsName().length() > 0) {
                 criteria.andGoodsNameLike("%" + goods.getGoodsName() + "%");

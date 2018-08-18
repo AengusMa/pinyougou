@@ -6,6 +6,7 @@ import com.common.pojo.Result;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,6 +69,8 @@ public class GoodsController {
     }
     @RequestMapping("/search")
     public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
+        String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        goods.setSellerId(sellerId);
         return goodsService.getPage(goods, page, rows);
     }
 }

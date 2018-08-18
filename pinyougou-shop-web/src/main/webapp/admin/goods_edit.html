@@ -24,7 +24,6 @@
 
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
 
-    <!-- 分页组件结束 -->
     <script src="../js/base.js"></script>
     <script src="../js/service/uploadService.js"></script>
     <script src="../js/service/goodsService.js"></script>
@@ -37,7 +36,7 @@
 </head>
 
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController"
-      ng-init="selectItemCat1List()">
+      ng-init="selectItemCat1List();findOne()">
 
 <!-- 正文区域 -->
 <section class="content">
@@ -212,18 +211,16 @@
                     <p>
 
                     <div ng-if="entity.goods.isEnableSpec=='1'">
-
                         <div class="row data-type">
-
                             <div ng-repeat="pojo in specList">
                                 <div class="col-md-2 title">{{pojo.text}}</div>
                                 <div class="col-md-10 data">
                                     <span ng-repeat="option in pojo.options">
-                                        <input type="checkbox" ng-click="updateAttribute($event,pojo.text,option.optionName);createItemList()">{{option.optionName}}
+                                        <input type="checkbox" ng-click="updateAttribute($event,pojo.text,option.optionName);createItemList()"
+                                                                ng-checked="checkAttributeValue(pojo.text,option.optionName)">{{option.optionName}}
                                     </span>
                                 </div>
                             </div>
-
                         </div>
 
 
@@ -276,8 +273,8 @@
 
     </div>
     <div class="btn-toolbar list-toolbar">
-        <button class="btn btn-primary" ng-click="add()"><i class="fa fa-save"></i>保存</button>
-        <button class="btn btn-default">返回列表</button>
+        <button class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>保存</button>
+        <a href="goods.html" class="btn btn-default">返回列表</a>
     </div>
 
 </section>
