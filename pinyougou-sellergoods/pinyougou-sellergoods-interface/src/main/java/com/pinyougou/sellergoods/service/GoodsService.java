@@ -56,4 +56,13 @@ public interface GoodsService {
       * @return com.common.pojo.PageResult
       */
      PageResult getPage(TbGoods goods, int pageNum, int size);
+
+     /**
+      * 修改状态
+      *      
+      * @param ids
+	  * @param status
+      * @return void
+      */
+     void updateStatus(Long[] ids,String status);
 }

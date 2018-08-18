@@ -54,6 +54,7 @@ public class GoodServiceImpl implements GoodsService {
         //启用规格
         saveItemList(goods);
     }
+
     //插入SKU列表数据
     private void saveItemList(Goods goods) {
         if ("1".equals(goods.getGoods().getIsEnableSpec())) {
@@ -103,6 +104,7 @@ public class GoodServiceImpl implements GoodsService {
             item.setImage((String) imageList.get(0).get("url"));
         }
     }
+
     @Override
     public void update(Goods goods) {
         //更新基本表数据
@@ -139,7 +141,9 @@ public class GoodServiceImpl implements GoodsService {
     @Override
     public void delete(Long[] ids) {
         for (Long id : ids) {
-            goodsMapper.deleteByPrimaryKey(id);
+            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setIsDelete("1");
+            goodsMapper.updateByPrimaryKey(goods);
         }
     }
 
@@ -147,8 +151,10 @@ public class GoodServiceImpl implements GoodsService {
     public PageResult getPage(TbGoods goods, int pageNum, int size) {
         PageHelper.startPage(pageNum, size);
         TbGoodsExample example = new TbGoodsExample();
+
         if (goods != null) {
             TbGoodsExample.Criteria criteria = example.createCriteria();
+            criteria.andIsDeleteIsNull();
             if (goods.getSellerId() != null && goods.getSellerId().length() > 0) {
                 //criteria.andSellerIdLike("%" + goods.getSellerId() + "%");
                 criteria.andSellerIdEqualTo(goods.getSellerId());
@@ -178,4 +184,15 @@ public class GoodServiceImpl implements GoodsService {
         Page<TbGoods> page = (Page<TbGoods>) goodsMapper.selectByExample(example);
         return new PageResult(page.getResult(), page.getTotal());
     }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setAuditStatus(status);
+            goodsMapper.updateByPrimaryKey(goods);
+        }
+
+    }
+
 }

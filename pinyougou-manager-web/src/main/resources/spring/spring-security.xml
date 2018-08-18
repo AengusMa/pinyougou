@@ -34,6 +34,7 @@
                 <user name="admin" password="123456" authorities="ROLE_ADMIN"/>
                 <user name="sunwukong" password="dasheng" authorities="ROLE_ADMIN"/>
                 <user name="mwl" password="1" authorities="ROLE_ADMIN"/>
+                <user name="xiaomi" password="1" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
