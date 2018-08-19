@@ -22,12 +22,18 @@ public interface ContentService {
 
     /**
      * 增加
+     *      
+     * @param content
+     * @return void
      */
     void add(TbContent content);
 
 
     /**
      * 修改
+     *      
+     * @param content
+     * @return void
      */
     void update(TbContent content);
 
