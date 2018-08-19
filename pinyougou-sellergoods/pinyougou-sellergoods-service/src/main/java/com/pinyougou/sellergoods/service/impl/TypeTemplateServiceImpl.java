@@ -13,6 +13,7 @@ import com.pinyougou.pojo.TbTypeTemplate;
 import com.pinyougou.pojo.TbTypeTemplateExample;
 import com.pinyougou.sellergoods.service.TypeTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Map;
  * describe:
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TypeTemplateServiceImpl implements TypeTemplateService {
     @Autowired
     private TbTypeTemplateMapper typeTemplateMapper;

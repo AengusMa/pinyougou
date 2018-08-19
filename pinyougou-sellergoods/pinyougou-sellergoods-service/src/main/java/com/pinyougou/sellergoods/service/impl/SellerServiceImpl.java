@@ -9,6 +9,7 @@ import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojo.TbSellerExample;
 import com.pinyougou.sellergoods.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * describe:
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SellerServiceImpl implements SellerService {
     @Autowired
     private TbSellerMapper tbSellerMapper;

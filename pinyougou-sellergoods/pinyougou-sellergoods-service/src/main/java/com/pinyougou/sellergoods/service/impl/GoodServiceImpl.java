@@ -10,6 +10,7 @@ import com.pinyougou.pojo.*;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Map;
  * describe:商品服务实现
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class GoodServiceImpl implements GoodsService {
 
     @Autowired

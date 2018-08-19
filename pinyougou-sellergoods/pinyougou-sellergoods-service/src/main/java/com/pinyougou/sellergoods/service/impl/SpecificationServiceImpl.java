@@ -13,6 +13,7 @@ import com.pinyougou.pojo.TbSpecificationOptionExample;
 import com.pinyougou.pojogroup.Specification;
 import com.pinyougou.sellergoods.service.SpecificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Map;
  * describe:
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SpecificationServiceImpl implements SpecificationService {
     @Autowired
     private TbSpecificationMapper specificationMapper;
