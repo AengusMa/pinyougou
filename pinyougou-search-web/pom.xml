@@ -3,15 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>pinyougou-search</artifactId>
+        <artifactId>pinyougou-parent</artifactId>
         <groupId>com.pinyougou</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pinyougou-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>pinyougou-search-service</artifactId>
-
+    <artifactId>pinyougou-search-web</artifactId>
     <packaging>war</packaging>
+
+
     <dependencies>
         <!-- Spring -->
         <dependency>
@@ -45,10 +47,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
         </dependency>
         <!-- dubbo相关 -->
         <dependency>
@@ -85,15 +83,12 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
             <groupId>com.pinyougou</groupId>
             <artifactId>pinyougou-search-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
-
     <build>
         <plugins>
             <plugin>
@@ -102,7 +97,7 @@
                 <version>2.2</version>
                 <configuration>
                     <!-- 指定端口 -->
-                    <port>9004</port>
+                    <port>9104</port>
                     <!-- 请求路径 -->
                     <path>/</path>
                 </configuration>
