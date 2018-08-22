@@ -366,9 +366,10 @@
 											<i>{{item.price}}</i>
 										</strong>
 								</div>
-								<div class="attr">
-									<em>{{item.title}}</em>
-								</div>
+                                <div class="attr" ng-bind-html="item.title | trustHtml">
+
+                                </div>
+                                </div>
 								<div class="cu">
 									<em></em>
 								</div>
@@ -380,7 +381,7 @@
 									<a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
 									<a href="javascript:void(0);" class="sui-btn btn-bordered">关注</a>
 								</div>
-							</div>
+
 						</li>
 						
 					</ul>
