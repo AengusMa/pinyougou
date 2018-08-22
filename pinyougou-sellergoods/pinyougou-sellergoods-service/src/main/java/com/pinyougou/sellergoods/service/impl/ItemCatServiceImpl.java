@@ -9,6 +9,7 @@ import com.pinyougou.pojo.TbItemCat;
 import com.pinyougou.pojo.TbItemCatExample;
 import com.pinyougou.sellergoods.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -67,12 +68,20 @@ public class ItemCatServiceImpl implements ItemCatService {
         Page<TbItemCat> page = (Page<TbItemCat>) itemCatMapper.selectByExample(example);
         return new PageResult(page.getResult(), page.getTotal());
     }
-
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Override
     public List<TbItemCat> getByParentId(Long parentId) {
         TbItemCatExample example = new TbItemCatExample();
         TbItemCatExample.Criteria criteria =example.createCriteria();
         criteria.andParentIdEqualTo(parentId);
+
+        //将模板id放入缓存（以商品分类名称作为key）
+        List<TbItemCat> itemCatList = findAll();
+        for(TbItemCat itemCat:itemCatList){
+            redisTemplate.boundHashOps("itemCat").put(itemCat.getName(),itemCat.getTypeId());
+        }
+
         return itemCatMapper.selectByExample(example);
     }
 }
