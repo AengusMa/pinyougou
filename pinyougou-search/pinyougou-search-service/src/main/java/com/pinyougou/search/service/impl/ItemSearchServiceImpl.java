@@ -82,6 +82,37 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                 query.addFilterQuery(filterQuery);
             }
         }
+        //按价格过滤
+        if(!"".equals(searchMap.get("price"))){
+            String priceStr = (String) searchMap.get("price");
+            String prices[] = priceStr.split("-");
+            if(!prices[0].equals("0")){
+                FilterQuery filterQuery = new SimpleFilterQuery();
+                Criteria filterCriteria = new Criteria("item_price").greaterThanEqual(prices[0]);
+                filterQuery.addCriteria(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+            if(!prices[1].equals("*")){
+                FilterQuery filterQuery = new SimpleFilterQuery();
+                Criteria filterCriteria = new Criteria("item_price").lessThanEqual(prices[1]);
+                filterQuery.addCriteria(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+        }
+        //分页
+        Integer pageNo = (Integer) searchMap.get("pageNo");
+        if(pageNo!=null){
+            pageNo = 1;
+        }
+        Integer pageSize = (Integer) searchMap.get("pageSize");
+        if(pageSize!=null){
+            pageSize = 20;
+        }
+        //起始索引
+        query.setOffset((pageNo-1)*pageSize);
+        query.setRows(pageSize);
+
+
         //**************获取高亮结果集*******************
         //返回高亮页对象
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);
@@ -102,6 +133,8 @@ public class ItemSearchServiceImpl implements ItemSearchService {
             }
         }
         map.put("rows", page.getContent());
+        map.put("totalPages", page.getTotalPages());
+        map.put("total", page.getTotalElements());
         return map;
     }
     /**
