@@ -51,6 +51,26 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return map;
     }
 
+    @Override
+    public void importList(List list) {
+        if (list.size() > 0) {
+            solrTemplate.saveBeans(list);
+            solrTemplate.commit();
+        }
+
+    }
+
+    @Override
+    public void deleteByGoodsByIds(List ids) {
+        if (ids.size() > 0) {
+            Query query = new SimpleQuery("*:*");
+            Criteria criteria = new Criteria("item_goodsid").in(ids);
+            query.addCriteria(criteria);
+            solrTemplate.delete(query);
+            solrTemplate.commit();
+        }
+    }
+
     //查询列表
     private Map searchList(Map searchMap) {
         Map map = new HashMap();

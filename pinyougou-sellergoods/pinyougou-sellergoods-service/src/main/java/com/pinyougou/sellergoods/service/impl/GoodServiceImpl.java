@@ -12,6 +12,7 @@ import com.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -153,10 +154,10 @@ public class GoodServiceImpl implements GoodsService {
     public PageResult getPage(TbGoods goods, int pageNum, int size) {
         PageHelper.startPage(pageNum, size);
         TbGoodsExample example = new TbGoodsExample();
-
+        TbGoodsExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDeleteIsNull();
         if (goods != null) {
-            TbGoodsExample.Criteria criteria = example.createCriteria();
-            criteria.andIsDeleteIsNull();
+
             if (goods.getSellerId() != null && goods.getSellerId().length() > 0) {
                 //criteria.andSellerIdLike("%" + goods.getSellerId() + "%");
                 criteria.andSellerIdEqualTo(goods.getSellerId());
@@ -196,5 +197,12 @@ public class GoodServiceImpl implements GoodsService {
         }
 
     }
-
+    @Override
+    public List<TbItem> findItemListByGoodsAndStatus(Long[] goodsIds,String stauts){
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(stauts);
+        criteria.andGoodsIdIn(Arrays.asList(goodsIds));
+        return itemMapper.selectByExample(example);
+    }
 }
