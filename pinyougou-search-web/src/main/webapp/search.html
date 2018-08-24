@@ -84,7 +84,7 @@
                                 <div class="input-append">
                                     <input type="text" id="autocomplete" ng-model="searchMap.keywords" type="text"
                                            class="input-error input-xxlarge"/>
-                                    <button class="sui-btn btn-xlarge btn-danger" ng-click="search()" type="button">搜索
+                                    <button class="sui-btn btn-xlarge btn-danger" ng-click="searchMap.pageNo = 1;search()" type="button">搜索
                                     </button>
                                 </div>
                             </form>
@@ -340,8 +340,8 @@
                     </ul>
                     <div><span>共{{resultMap.totalPages}}页&nbsp;</span><span>
       到第
-      <input type="text" class="page-num" ng-model="pageNo">
-      页 <button class="page-confirm"  ng-click="queryByPage(pageNo)">确定</button></span></div>
+      <input type="text" class="page-num" ng-model="searchMap.pageNo">
+      页 <button class="page-confirm"  ng-click="queryByPage(searchMap.pageNo)">确定</button></span></div>
                 </div>
             </div>
         </div>

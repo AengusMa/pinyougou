@@ -9,7 +9,7 @@ app.controller('searchController', function ($scope, searchService) {
             function (response) {
                 $scope.resultMap = response;
                 //查询后显示第一页
-                $scope.searchMap.pageNo = 1;
+                // $scope.searchMap.pageNo = 1;
                 buildPageLable();
 
             }
@@ -35,6 +35,9 @@ app.controller('searchController', function ($scope, searchService) {
                 firstPage = $scope.searchMap.pageNo-2;
                 lastPage = $scope.searchMap.pageNo+2;
             }
+        }else{
+            $scope.firstDot=false;
+            $scope.lastDot= false;
         }
 
         for(var i=firstPage;i<=lastPage;i++){
