@@ -84,9 +84,17 @@ app.controller('searchController', function ($scope, searchService) {
             return false;
         }
     };
-    $scope.sortSearch = function (sortField,sort) {
+    $scope.sortSearch = function (sortField, sort) {
         $scope.searchMap.sortField = sortField;
         $scope.searchMap.sort = sort;
         $scope.search();
-    }
+    };
+    $scope.keywordsHasBrand = function () {
+        for (var i = 0; i < $scope.resultMap.brandList.length; i++) {
+            if ($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0) {
+                return true;
+            }
+        }
+        return false;
+    };
 });

@@ -184,7 +184,8 @@
                 </div>
                 <div class="fl ext"></div>
             </div>
-            <div class="type-wrap logo" ng-if="resultMap.brandList!=null  && searchMap.brand==''">
+            <div class="type-wrap logo"
+                 ng-if="resultMap.brandList!=null  && searchMap.brand=='' && keywordsHasBrand()==false">
                 <div class="fl key brand">品牌</div>
                 <div class="value logos">
                     <ul class="logo-list">
@@ -271,13 +272,13 @@
                 <div class="navbar-inner filter">
                     <ul class="sui-nav">
                         <li class="active">
-                            <a href="#"  ng-click="sortSearch('','')">综合</a>
+                            <a href="#" ng-click="sortSearch('','')">综合</a>
                         </li>
                         <li>
                             <a href="#">销量</a>
                         </li>
                         <li>
-                            <a href="#"  ng-click="sortSearch('updatetime','DESC')">新品</a>
+                            <a href="#" ng-click="sortSearch('updatetime','DESC')">新品</a>
                         </li>
                         <li>
                             <a href="#">评价</a>
