@@ -84,7 +84,8 @@
                                 <div class="input-append">
                                     <input type="text" id="autocomplete" ng-model="searchMap.keywords" type="text"
                                            class="input-error input-xxlarge"/>
-                                    <button class="sui-btn btn-xlarge btn-danger" ng-click="searchMap.pageNo = 1;search()" type="button">搜索
+                                    <button class="sui-btn btn-xlarge btn-danger"
+                                            ng-click="searchMap.pageNo = 1;search()" type="button">搜索
                                     </button>
                                 </div>
                             </form>
@@ -199,7 +200,7 @@
                 </div>
             </div>
             <div class="type-wrap" ng-repeat="spec in resultMap.specList"
-                        ng-if="searchMap.spec[spec.text]==null">
+                 ng-if="searchMap.spec[spec.text]==null">
                 <div class="fl key">{{spec.text}}</div>
                 <div class="fl value">
                     <ul class="type-list">
@@ -270,19 +271,22 @@
                 <div class="navbar-inner filter">
                     <ul class="sui-nav">
                         <li class="active">
-                            <a href="#">综合</a>
+                            <a href="#"  ng-click="sortSearch('','')">综合</a>
                         </li>
                         <li>
                             <a href="#">销量</a>
                         </li>
                         <li>
-                            <a href="#">新品</a>
+                            <a href="#"  ng-click="sortSearch('updatetime','DESC')">新品</a>
                         </li>
                         <li>
                             <a href="#">评价</a>
                         </li>
                         <li>
-                            <a href="#">价格</a>
+                            <a href="#" ng-click="sortSearch('price','ASC')">价格↑</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="sortSearch('price','DESC')">价格↓</a>
                         </li>
                     </ul>
                 </div>
@@ -341,7 +345,7 @@
                     <div><span>共{{resultMap.totalPages}}页&nbsp;</span><span>
       到第
       <input type="text" class="page-num" ng-model="searchMap.pageNo">
-      页 <button class="page-confirm"  ng-click="queryByPage(searchMap.pageNo)">确定</button></span></div>
+      页 <button class="page-confirm" ng-click="queryByPage(searchMap.pageNo)">确定</button></span></div>
                 </div>
             </div>
         </div>
