@@ -4,7 +4,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.common.pojo.PageResult;
 import com.common.pojo.Result;
-import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
@@ -75,13 +74,22 @@ public class GoodsController {
 
     @Autowired
     private Destination queueSolrDeleteDestination;
+    @Autowired
+    private Destination topicPageDeleteDestination;
     @RequestMapping("/delete")
     public Result delete(final Long[] ids) {
         try {
             goodsService.delete(ids);
             //删除索引库的数据
+            jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    return session.createObjectMessage(ids);
+                }
+            });
+            //删除每个服务器上的商品详情页
 
-            jmsTemplate.send(queueSolrDestination, new MessageCreator() {
+            jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
                     return session.createObjectMessage(ids);
@@ -105,6 +113,9 @@ public class GoodsController {
     private JmsTemplate jmsTemplate;
     @Autowired
     private Destination queueSolrDestination;
+    @Autowired
+    private Destination topicPageDestination;
+
 
     @RequestMapping("/updateStatus")
     public Result updateStatus(Long[] ids, String status) {
@@ -113,7 +124,7 @@ public class GoodsController {
             //审核通过
             if ("1".equals(status)) {
                 final List<TbItem> itemList = goodsService.findItemListByGoodsAndStatus(ids, status);
-                //更新solr索引库
+                //更新solr索引库(消息)
                 final String jsonString = JSON.toJSONString(itemList);
                 jmsTemplate.send(queueSolrDestination, new MessageCreator() {
                     @Override
@@ -122,10 +133,17 @@ public class GoodsController {
                     }
                 });
 
-                //生成商品详情页
-                for (Long id : ids) {
-                    itemPageService.genItemHtml(id);
+                //生成商品详情页(消息)
+                for (final Long id : ids) {
+                    //itemPageService.genItemHtml(id);
+                    jmsTemplate.send(topicPageDestination, new MessageCreator() {
+                        @Override
+                        public Message createMessage(Session session) throws JMSException {
+                            return session.createTextMessage(id+"");
+                        }
+                    });
                 }
+
             }
             return new Result(true, "更新成功");
         } catch (Exception e) {
@@ -134,17 +152,17 @@ public class GoodsController {
         }
     }
 
-    @Reference(timeout = 10000)
-    private ItemPageService itemPageService;
-
-    /**
-     * 测试时候使用
-     *
-     * @param goodsId
-     * @return void
-     */
-    @RequestMapping("/genHtml")
-    public void genHtml(Long goodsId) {
-        itemPageService.genItemHtml(goodsId);
-    }
+    //@Reference(timeout = 10000)
+    //private ItemPageService itemPageService;
+    //
+    ///**
+    // * 测试时候使用
+    // *
+    // * @param goodsId
+    // * @return void
+    // */
+    //@RequestMapping("/genHtml")
+    //public void genHtml(Long goodsId) {
+    //    itemPageService.genItemHtml(goodsId);
+    //}
 }
