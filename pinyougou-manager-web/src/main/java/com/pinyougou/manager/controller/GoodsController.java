@@ -91,10 +91,15 @@ public class GoodsController {
     public Result updateStatus(Long[] ids, String status) {
         try {
             goodsService.updateStatus(ids, status);
-            //如果审核通过更新solr索引库
+            //审核通过
             if ("1".equals(status)) {
                 List<TbItem> itemList = goodsService.findItemListByGoodsAndStatus(ids, status);
+                //更新solr索引库
                 searchService.importList(itemList);
+                //生成商品详情页
+                for(Long id:ids){
+                    itemPageService.genItemHtml(id);
+                }
             }
             return new Result(true, "更新成功");
         } catch (Exception e) {
@@ -104,6 +109,12 @@ public class GoodsController {
     }
     @Reference(timeout = 10000)
     private ItemPageService itemPageService;
+    /**
+     * 测试时候使用
+     *      
+     * @param goodsId
+     * @return void
+     */
     @RequestMapping("/genHtml")
     public void genHtml(Long goodsId){
         itemPageService.genItemHtml(goodsId);
