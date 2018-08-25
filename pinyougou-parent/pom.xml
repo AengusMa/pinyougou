@@ -30,6 +30,7 @@
         <security.version>3.2.3.RELEASE</security.version>
         <solrj.version>4.10.3</solrj.version>
         <ik.version>2012_u6</ik.version>
+        <activemq.version>5.13.4</activemq.version>
     </properties>
 
     <dependencyManagement>
@@ -193,6 +194,11 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-config</artifactId>
                 <version>4.1.0.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>5.13.4</version>
             </dependency>
             <dependency>
                 <groupId>com.github.penggle</groupId>
