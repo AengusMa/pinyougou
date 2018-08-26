@@ -17,9 +17,8 @@ public interface ItemPageService {
 
     /**
      * 删除商品详情页
-     *
      * @param goodsId
-     * @return
+    boolean * @return
      */
     boolean deleteItemHtml(Long[] goodsId);
 }
