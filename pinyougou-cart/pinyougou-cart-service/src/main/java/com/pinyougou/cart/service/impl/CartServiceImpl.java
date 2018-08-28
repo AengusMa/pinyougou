@@ -55,9 +55,9 @@ public class CartServiceImpl implements CartService {
             cart1.setSellerId(sellerId);
             cart1.setSellerName(item.getSeller());
             TbOrderItem orderItem = createOrderItem(item, num);
-            List orderItemList = new ArrayList();
+            List orderItemList = new ArrayList<TbOrderItem>();
             orderItemList.add(orderItem);
-            cart.setOrderItemList(orderItemList);
+            cart1.setOrderItemList(orderItemList);
             cartList.add(cart1);
         } else {
             //5.如果购物车列表中存在该商家的购物车
