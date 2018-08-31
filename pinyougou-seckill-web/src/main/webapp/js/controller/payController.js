@@ -21,7 +21,7 @@ app.controller('payController', function ($scope, $location, payService) {
 
             }
         );
-    }
+    };
 
     //调用查询
     queryPayStatus = function () {
@@ -39,11 +39,11 @@ app.controller('payController', function ($scope, $location, payService) {
                 }
             }
         );
-    }
+    };
 
     //获取金额
     $scope.getMoney = function () {
         return $location.search()['money'];
-    }
+    };
 
 });

@@ -7,7 +7,7 @@ app.controller('seckillGoodsController', function ($scope, $location, seckillGoo
                 $scope.list = response;
             }
         );
-    }
+    };
 
     //查询商品
     $scope.findOne = function () {
@@ -33,7 +33,7 @@ app.controller('seckillGoodsController', function ($scope, $location, seckillGoo
 
             }
         );
-    }
+    };
 
 
     //转换秒为   天小时分钟秒格式  XXX天 10:22:33
@@ -48,7 +48,7 @@ app.controller('seckillGoodsController', function ($scope, $location, seckillGoo
         }
         return timeString + hours + ":" + minutes + ":" + seconds;
 
-    }
+    };
 
     //提交订单
     $scope.submitOrder = function () {
@@ -63,6 +63,6 @@ app.controller('seckillGoodsController', function ($scope, $location, seckillGoo
             }
         );
 
-    }
+    };
 
 });
