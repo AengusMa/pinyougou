@@ -120,10 +120,14 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
         if (seckillGoodsList == null || seckillGoodsList.size() == 0) {
             TbSeckillGoodsExample example = new TbSeckillGoodsExample();
             Criteria criteria = example.createCriteria();
-            criteria.andStatusEqualTo("1");// 审核通过的商品
-            criteria.andStockCountGreaterThan(0);//库存数大于0
-            criteria.andStartTimeLessThanOrEqualTo(new Date());//开始日期小于等于当前日期
-            criteria.andEndTimeGreaterThanOrEqualTo(new Date());//截止日期大于等于当前日期
+            // 审核通过的商品
+            criteria.andStatusEqualTo("1");
+            //库存数大于0
+            criteria.andStockCountGreaterThan(0);
+            //开始日期小于等于当前日期
+            criteria.andStartTimeLessThanOrEqualTo(new Date());
+            //截止日期大于等于当前日期
+            criteria.andEndTimeGreaterThanOrEqualTo(new Date());
             seckillGoodsList = seckillGoodsMapper.selectByExample(example);
             //将列表数据装入缓存
             for (TbSeckillGoods seckillGoods : seckillGoodsList) {
