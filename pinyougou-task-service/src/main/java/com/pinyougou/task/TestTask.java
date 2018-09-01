@@ -14,7 +14,7 @@ import java.util.Date;
 public class TestTask {
 
 
-    @Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "20 * * * * ?")
     public void refreshSeckillGoods() {
         System.out.println("执行了任务调度" + new Date());
     }
